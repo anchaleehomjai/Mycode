@@ -1,0 +1,123 @@
+Microsoft (R) Macro Assembler Version 5.10                  7/22/22 15:35:37
+ECHO PROGRAM                                                Page     1-1
+
+
+				TITLE	ECHO PROGRAM
+				.MODEL	SMALL
+				.STACK	100H
+				.DATA
+ 0000  00 24			CHAR1 DB ?, '$'
+ 0002  00 24			CHAR2 DB ?, '$'
+				.CODE
+ 0000				MAIN	PROC
+				; display prompt
+ 0000  B4 02				MOV	AH, 2		; display chara
+				cter function
+ 0002  B2 3F				MOV	DL, '?'		; character is 
+				'?'
+ 0004  CD 21				INT	21H		; display it
+				; input a character
+ 0006  B4 01				MOV	AH, 1		; read characte
+				r function
+ 0008  CD 21				INT	21H		; character in 
+				AL
+ 000A  A2 0000 R			MOV	CHAR1, AL		; save 
+				it in BL
+				; input a character
+ 000D  B4 01				MOV	AH, 1		; read characte
+				r function
+ 000F  CD 21				INT	21H		; character in 
+				AL
+ 0011  A2 0002 R			MOV	CHAR2, AL		; save 
+				it in BL
+				
+				; go to a new line
+ 0014  B4 02				MOV	AH, 2		; display chara
+				cter function
+ 0016  B2 0D				MOV	DL, 0DH		; carriage retu
+				rn
+ 0018  CD 21				INT	21H		; execute carri
+				age return
+ 001A  B2 0A				MOV	DL, 0AH		; line feed
+ 001C  CD 21				INT	21H		; execute line 
+				feed
+				
+				;if char1 < char2
+				    CMP char1,char2
+LAB21.ASM(30): error A2052: Improper operand type
+ 001E  7B 11			    JNP DisplayChar2Char1
+				;then 
+				; display character
+ 0020  8A 16 0000 R			MOV	DL, CHAR1		; retri
+				eve character
+ 0024  CD 21				INT	21H		; and display i
+				t
+				; display character
+ 0026  8A 16 0002 R			MOV	DL, CHAR2	; retrieve char
+				acter
+ 002A  CD 21				INT	21H		; and display i
+				t
+Microsoft (R) Macro Assembler Version 5.10                  7/22/22 15:35:37
+ECHO PROGRAM                                                Page     1-2
+
+
+				DisplayChar2Char1:
+LAB21.ASM(39): error A2006: Phase error between passes
+				; display character
+ 0031  8A 16 0002 R			MOV	DL, CHAR2		; retri
+				eve character
+ 0035  CD 21				INT	21H		; and display i
+				t
+				; display character
+ 0037  8A 16 0000 R			MOV	DL, CHAR1	; retrieve char
+				acter
+ 003B  CD 21				INT	21H		; and display i
+				t
+				
+				
+				; return to DOS
+ 003D  B4 4C				MOV	AH, 4CH		; DOS exit func
+				tion
+ 003F  CD 21				INT	21H		; exit to DOS
+ 0041				MAIN	ENDP
+					END MAIN
+Microsoft (R) Macro Assembler Version 5.10                  7/22/22 15:35:37
+ECHO PROGRAM                                                Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0004	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0100	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0041	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+CHAR1  . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+CHAR2  . . . . . . . . . . . . .  	L BYTE	0002	_DATA
+
+DISPLAYCHAR2CHAR1  . . . . . . .  	L NEAR	0031	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	N PROC	0000	_TEXT	Length = 0041
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  LAB21		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+     52 Source  Lines
+     52 Total   Lines
+     21 Symbols
+
+  47988 + 461319 Bytes symbol space free
+
+      0 Warning Errors
+      2 Severe  Errors
